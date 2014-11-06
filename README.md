@@ -2,6 +2,8 @@ StoryDev
 ========
 This is an engine and interactive story editor in-one to develop games with a focus on story.
 
+You may find it easier to install this product, without the source code, by downloading the [ZIP file from MEGA](https://mega.co.nz/#!tIN2EYbL!neb4j5Guc2PtWIQvEmnTOt8UrfRL3B_1RHMBlkzM_48).
+
 Getting Started
 ===============
 Before you can use this Editor, you will need Windows XP Home Edition or later with the .NET Framework 4 (or later) installed. To compile your video game, you are also going to need to install the Haxe Toolkit along with LIME and OpenFL. Firstly, visit the [Haxe](http://haxe.org/) website and download the latest Haxe toolkit. When downloaded, install the package.
