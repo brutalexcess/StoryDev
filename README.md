@@ -27,4 +27,4 @@ We are also considering completing some video tutorials to make it easier for yo
 
 Donations
 =========
-If you like this project, please consider [donating to us](). This will help us stay alive and keep this project up-to-date.
+If you like this project, please consider [donating to us](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8CLJ92X3E5AF4). This will help us stay alive and keep this project up-to-date.
