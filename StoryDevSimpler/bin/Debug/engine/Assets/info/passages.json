@@ -1,0 +1,54 @@
+[
+        {
+            "id": 0,
+            "title": "Test Application",
+            "text": "setBGColor(0x000000); setMenuTextColor(0xFFFFFF); setTextFormat('main', 12, 0xFFFFFF); setLinkFormat('main-bold', 12, 0x00FFFF); setPassageColor(0xFFFFFF, .15); myJsonString = '{ \"message\":\"This is **some** text.\" }'; myObject = parseJson(myJsonString); x = 10; y = 10; j = 5; jsonArray = parseJson('{\"id\":0, \"text\":\"Some Text\", \"array\":[0, 4, 18] }'); gotoPassage(1);"
+        },
+        {
+            "id": 1,
+            "title": "Start",
+            "text": "appendShow('Test home page:\n\n'); appendLink('Passage test', 'gotoPassage(2)'); appendShow('\n\n'); appendLink('Math', 'gotoPassage(3)'); appendShow('\n\n'); appendLink('Variables', 'gotoPassage(4)'); appendShow('\n\n'); appendLink('Markdown', 'gotoPassage(5)'); appendShow('\n\n');  appendLink('Logic', 'gotoPassage(6)'); appendShow('\n\n');  appendLink('Images and sound', 'gotoPassage(7)'); appendShow('\n\n'); appendLink('Game Events', 'gotoPassage(10)'); appendShow('\n\n'); appendLink('JSON Test', 'gotoPassage(11)');",
+            "htmlText": "This is an **extra** bit of text that will get show()-ed before everything else, make sure not to use show() in the 'text' property or this will be wipped.\n\n"
+        },
+        {
+            "id": 2,
+            "title": "Passages",
+            "text": "show('The fact that you are now on this passage validates that this works\n\n'); appendLink('Go Back', 'goBack()');"
+        },
+        {
+            "id": 3,
+            "title": "Math",
+            "text": "show('1+1 = ' + string(1 + 1) + '\n\n' + '4 - 3 * (4 - 2 * (6 - 3)) / 2 = ' + string(4 - 3 * (4 - 2 * (6 - 3)) / 2)); appendShow('\n\n'); appendShow('A random number between 1 and 100: ' + rand(1, 100)); appendShow('\n\n'); appendLink('Go Back', 'goBack()');"
+        }, 
+        {
+            "id": 4,
+            "title": "Math",
+            "text": "show('x = ' + x + '\nx * 3 = ' + string(x * 3) + '\nx / 3 (rounded) = ' + string(Math.round(x / 3) + '\n\n')); appendLink('Add 1 to x', 'x++; gotoPassage(4)'); appendShow('\n\n'); appendLink('Subtract 1 to x', 'x--; gotoPassage(4)'); appendShow('\n\n'); appendLink('Go Back', 'goBack()');"
+        }, 
+        {
+            "id": 5,
+            "title": "Markdown",
+            "text": "show('Markdown test\n\n__This is double underscore(_)__\n**This is double asterisk(*)**\n\n__**This is bold and italic**__\n\n'); appendLink('Go Back', 'goBack();');"
+        },
+        {
+            "id": 6,
+            "title": "Logic",
+            "text": "show('Do basic if statements work? ');if (1 < 2) appendShow('Yes ') else appendShow('No ');if (1 > 2) appendShow('No ') else appendShow('Yes ');appendShow('\nDoes && work? ');if (1 < 2 && 3 > 2) appendShow('Yes ') else appendShow('No ');if (1 > 2 && 3 > 2) appendShow('No ') else appendShow('Yes ');appendShow('\nDoes || work? ');if (1 < 2 || 3 < 2) appendShow('Yes ') else appendShow('No ');if (1 > 2 || 3 < 2) appendShow('No ') else appendShow('Yes ');appendShow('\nDoes complex compounding work? ');if (2 > 1 && (1 < 3 || 2 < 1)) appendShow('Yes ') else appendShow('No ');if ((2 > 1 && 1 < 3) || 2 < 1) appendShow('Yes ') else appendShow('No ');if ((.5 > 1 && 4 < 3) || 2 < 1) appendShow('No ') else appendShow('Yes ');appendShow('\n\n');appendLink('Go Back', 'goBack()');"
+        },
+        {
+            "id": 7,
+            "title": "Images and sound",
+            "text": "show('');appendLink('Show character image - Includes custom transition', 'transPassage(30, 30, __stageWidth * .5, __stageHeight * .9, 1); showCharImage(\"char0\", true); transCharImage(__stageWidth - 80, 30, 70, 350, 1);');appendShow('\n\n');appendLink('Remove character image', 'removeCharImage(true)');appendShow('\n\n');appendLink('Show bg image', 'showBGImage(\"bg0\")');appendShow('\n\n');appendLink('Remove bg image', 'removeBGImage()');appendShow('\n\n');appendLink('Play sound', 'playSound(\"test.mp3\", 0, 0)');appendShow('\n\n');appendLink('Go Back', 'goBack()');appendShow('\n\n');appendLink('Default Passage size', 'removeCharImage()');"
+        },
+		{
+			"id":10,
+			"title": "Game Events",
+			"text": "appendLink('Start Event', 'startEvent(1);'); appendShow('\n\n'); appendLink('Go Back', 'gotoPassage(1);');appendShow('\n\n'); appendLink('Stop Event', 'stopEvent(1);'); appendShow('\n\n'); appendLink('Refresh', 'gotoPassage(10)'); appendShow('\n\n'); appendLink('Call Event', 'callEvent(0);');",
+			"htmlText": "Hello, there. This is the Game Events page.\n\nLet's see if this works. This page calls the event ID 0, which in turns starts ID 1.\n\nStarted Events are looped every time a new passage is displayed and the code is run. You can imagine being able to use a mission log or something similar to check variables for each passage.\n\n"
+		},
+		{
+			"id":11,
+			"title":"JSON Test",
+			"text": "show('Here is some JSON we are going to test.\n\n**Note: Only Strings and Floats get saved by the Save and Load functions in the Options menu.**'); appendShow('\n\n'); appendShow('The ID is: ' + jsonArray.id + ', the text: ' + jsonArray.text + ', and the third item in the array is: ' + jsonArray.array[2]); appendShow('\n\nThe JSON when stringified: ' + stringifyJson(jsonArray)); appendShow('\n\n'); appendShow(myObject.message + '\n\n'); myObject.array = [0, 4]; appendShow(myObject.array[1] + '\n\n'); myObject.anotherObject = { message: \"The result of 4 + 6 is: \", code: 4 + 6 }; data = myObject.anotherObject; appendShow(data.message + data.code); appendShow('\n\n'); appendShow(\"New JSON Structure: \" + stringifyJson(myObject)); appendShow('\n\n'); appendLink('Go Back', 'gotoPassage(1)'); "
+		}
+]
