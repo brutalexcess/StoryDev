@@ -16,6 +16,7 @@ namespace StoryDev
         private Project p;
         private int previousPassage;
         private int previousEvent;
+        private int previousType;
 
         public MainForm()
         {
@@ -23,6 +24,7 @@ namespace StoryDev
 
             previousPassage = -1;
             previousEvent = -1;
+            previousType = -1;
 
             if (!Properties.Settings.Default.started)
                 new InstallHaxe().ShowDialog();
@@ -89,6 +91,7 @@ namespace StoryDev
                 pnlMain.Controls.Clear();
                 if (cmbType.SelectedIndex == 0)
                 {
+                    previousType = 0;
                     var richCode = new RichAndCode();
                     richCode.onKeyUp += onKeyUp;
                     pnlMain.Controls.Add(richCode);
@@ -96,6 +99,7 @@ namespace StoryDev
                 }
                 else if (cmbType.SelectedIndex == 1)
                 {
+                    previousType = 1;
                     var code = new CodeWindow();
                     code.KeyUp += onKeyUp;
                     pnlMain.Controls.Add(code);
@@ -219,6 +223,7 @@ namespace StoryDev
                 var item = lbItems.Items[lbItems.SelectedIndex].ToString();
                 var id = item.Substring(0, item.IndexOf(":"));
                 var idc = Convert.ToInt32(id);
+                if (previousPassage == idc && previousType != 0) return;
                 previousPassage = idc;
                 foreach (Passage passage in p.passages)
                 {
@@ -238,6 +243,7 @@ namespace StoryDev
                 var item = lbItems.Items[lbItems.SelectedIndex].ToString();
                 var id = item.Substring(0, item.IndexOf(":"));
                 var idc = Convert.ToInt32(id);
+                if (previousEvent == idc && previousType != 1) return;
                 previousEvent = idc;
                 foreach (GameEvent ge in p.events)
                 {
@@ -272,14 +278,18 @@ namespace StoryDev
                 else if (response == System.Windows.Forms.DialogResult.No)
                 {
                     ofd.ShowDialog();
-                    p.Load(ofd.FileName);
+                    if (ofd.FileName != "")
+                        p.Load(ofd.FileName);
                 }
             }
             else
             {
-                p = new Project();
                 ofd.ShowDialog();
-                p.Load(ofd.FileName);
+                if (ofd.FileName != "")
+                {
+                    p = new Project();
+                    p.Load(ofd.FileName);
+                }
             }
         }
 
@@ -306,7 +316,7 @@ namespace StoryDev
                 if (cmbType.SelectedIndex == 0)
                 {
                     var item = lbItems.Items[lbItems.SelectedIndex].ToString();
-                    var id = item.Substring(0, item.IndexOf(":") - 1);
+                    var id = item.Substring(0, item.IndexOf(":"));
                     var idc = Convert.ToInt32(id);
                     p.RemovePassage(idc);
                     PopulateList("Passages");
@@ -314,7 +324,7 @@ namespace StoryDev
                 else if (cmbType.SelectedIndex == 1)
                 {
                     var item = lbItems.Items[lbItems.SelectedIndex].ToString();
-                    var id = item.Substring(0, item.IndexOf(":") - 1);
+                    var id = item.Substring(0, item.IndexOf(":"));
                     var idc = Convert.ToInt32(id);
                     p.RemoveGameEvent(idc);
                     PopulateList("Game Events");

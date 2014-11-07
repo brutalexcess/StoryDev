@@ -24,9 +24,8 @@ namespace StoryDev
         private void btnProcessCopy_Click(object sender, EventArgs e)
         {
             var content = rtbContent.Text;
-            content = content.Replace("\n", "\\n");
-            content = content.Replace("”", "\\\"");
-            content = content.Replace("\"", "\\\"");
+            content = content.Replace("\n", " ");
+            content = content.Replace("”", "\"");
             Clipboard.SetText(content);
             Close();
         }

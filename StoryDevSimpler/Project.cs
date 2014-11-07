@@ -7,6 +7,7 @@ using System.IO.Compression;
 using System.Web.Helpers;
 using System.Diagnostics;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace StoryDev
 {
@@ -64,7 +65,10 @@ namespace StoryDev
             foreach (Passage p in passages)
             {
                 if (p.id == id)
+                {
                     passages.Remove(p);
+                    break;
+                }
             }
         }
 
@@ -96,14 +100,27 @@ namespace StoryDev
             foreach (GameEvent ge in events)
             {
                 if (ge.id == id)
+                {
                     events.Remove(ge);
+                    break;
+                }
             }
         }
 
         public void ExportJson()
         {
-            File.WriteAllText(path + "/engine/Assets/info/passages.json", Json.Encode(passages));
-            File.WriteAllText(path + "/engine/Assets/info/events.json", Json.Encode(events));
+            var jsonPassages = Json.Encode(passages);
+            jsonPassages = jsonPassages.Replace("\\u0027", "'");
+            jsonPassages = jsonPassages.Replace("\\r", " ");
+            jsonPassages = jsonPassages.Replace("\\\\", "\\");
+            var jsonEvents = Json.Encode(events);
+            jsonEvents = jsonEvents.Replace("\\u0027", "'");
+            jsonEvents = jsonEvents.Replace("\\r", " ");
+            jsonEvents = jsonEvents.Replace("\\\\", "\\");
+
+
+            File.WriteAllText(path + "/engine/Assets/info/passages.json", jsonPassages);
+            File.WriteAllText(path + "/engine/Assets/info/events.json", jsonEvents);
         }
 
         public void BuildAndTest(string target)
@@ -150,6 +167,8 @@ namespace StoryDev
                         bw.Write(pid);
                         bw.Write(eid);
                         bw.Close();
+
+                        MessageBox.Show("Save successful.");
                     }
                 }
             }
@@ -190,6 +209,8 @@ namespace StoryDev
                         eid = br.ReadInt32();
 
                         br.Close();
+
+                        MessageBox.Show("Load successful.");
                     }
                 }
             }
