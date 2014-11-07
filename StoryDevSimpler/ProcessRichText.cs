@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace StoryDevSimpler
+namespace StoryDev
 {
     public partial class ProcessRichText : Form
     {

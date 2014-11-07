@@ -7,16 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Web.Helpers;
-using Utilities;
+using System.Diagnostics;
 
-namespace StoryDevSimpler
+namespace StoryDev
 {
     public partial class MainForm : Form
     {
         private Project p;
         private int previousPassage;
         private int previousEvent;
-        private int previousType;
 
         public MainForm()
         {
@@ -24,13 +23,9 @@ namespace StoryDevSimpler
 
             previousPassage = -1;
             previousEvent = -1;
-            previousType = -1;
-        }
 
-        private void btnExport_Click(object sender, EventArgs e)
-        {
-            if (p != null)
-                p.ExportJson();
+            if (!Properties.Settings.Default.started)
+                new InstallHaxe().ShowDialog();
         }
 
         private void btnProcess_Click(object sender, EventArgs e)
@@ -41,7 +36,10 @@ namespace StoryDevSimpler
 
         private void btnOptions_Click(object sender, EventArgs e)
         {
-            cmsOptions.Show(PointToScreen(btnOptions.Location));
+            var pt1 = PointToScreen(panel3.Location);
+            var pt2 = btnOptions.Location;
+            var pt3 = new Point(pt1.X + pt2.X, pt1.Y + pt2.Y);
+            cmsOptions.Show(pt3);
         }
 
         private void btnAddPassage_Click(object sender, EventArgs e)
@@ -91,12 +89,16 @@ namespace StoryDevSimpler
                 pnlMain.Controls.Clear();
                 if (cmbType.SelectedIndex == 0)
                 {
-                    pnlMain.Controls.Add(new RichAndCode());
+                    var richCode = new RichAndCode();
+                    richCode.onKeyUp += onKeyUp;
+                    pnlMain.Controls.Add(richCode);
                     PopulateList("Passages");
                 }
                 else if (cmbType.SelectedIndex == 1)
                 {
-                    pnlMain.Controls.Add(new CodeWindow());
+                    var code = new CodeWindow();
+                    code.KeyUp += onKeyUp;
+                    pnlMain.Controls.Add(code);
                     PopulateList("Game Events");
                 }
             }
@@ -336,54 +338,28 @@ namespace StoryDevSimpler
                 SaveItem("Game Events", previousEvent != -1 ? previousEvent : idc);
         }
 
-        private globalKeyboardHook gkh = new globalKeyboardHook();
-        private bool ControlDown = false;
-        private bool ControlS = false;
+        private void onKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.S)
+            {
+                btnSave.PerformClick();
+            }
+        }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            gkh.HookedKeys.Add(Keys.S);
-            gkh.HookedKeys.Add(Keys.Control);
-            gkh.KeyUp += gkh_KeyUp;
-            gkh.KeyDown += gkh_KeyDown;
+            
         }
 
-        void gkh_KeyDown(object sender, KeyEventArgs e)
+        private void documentationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if ((e.KeyCode == System.Windows.Forms.Keys.LControlKey) || (e.KeyCode == System.Windows.Forms.Keys.RControlKey))
-            {
-                ControlDown = true;
-            }
-            else
-            {
-                if (ControlDown == true && e.KeyCode == Keys.S)
-                {
-                    ControlS = true;
-                }
-            }
+
         }
 
-        void gkh_KeyUp(object sender, KeyEventArgs e)
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if ((e.KeyCode == System.Windows.Forms.Keys.LControlKey) || (e.KeyCode == System.Windows.Forms.Keys.RControlKey))
-            {
-                if (ControlS == true)
-                {
-                    btnSave.PerformClick();
-                    ControlS = false;
-                }
-                ControlDown = false;
-            }
-            else
-            {
-                if (ControlS == true && e.KeyCode == Keys.S)
-                {
-                    btnSave.PerformClick();
-                    ControlS = false;
-                }
-            }
+            Properties.Settings.Default.Save();
         }
-
 
     }
 }

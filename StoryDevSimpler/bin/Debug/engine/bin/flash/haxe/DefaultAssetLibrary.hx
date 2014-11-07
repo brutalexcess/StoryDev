@@ -58,6 +58,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("a/img/bg0.png", AssetType.IMAGE);
 		className.set ("a/img/char0.png", __ASSET__a_img_char0_png);
 		type.set ("a/img/char0.png", AssetType.IMAGE);
+		className.set ("a/info/commands.txt", __ASSET__a_info_commands_txt);
+		type.set ("a/info/commands.txt", AssetType.TEXT);
 		className.set ("a/info/events.json", __ASSET__a_info_events_json);
 		type.set ("a/info/events.json", AssetType.TEXT);
 		className.set ("a/info/passages.json", __ASSET__a_info_passages_json);
@@ -89,6 +91,9 @@ class DefaultAssetLibrary extends AssetLibrary {
 		id = "a/img/char0.png";
 		path.set (id, id);
 		type.set (id, AssetType.IMAGE);
+		id = "a/info/commands.txt";
+		path.set (id, id);
+		type.set (id, AssetType.TEXT);
 		id = "a/info/events.json";
 		path.set (id, id);
 		type.set (id, AssetType.TEXT);
@@ -126,6 +131,9 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		className.set ("a/img/char0.png", __ASSET__a_img_char0_png);
 		type.set ("a/img/char0.png", AssetType.IMAGE);
+		
+		className.set ("a/info/commands.txt", __ASSET__a_info_commands_txt);
+		type.set ("a/info/commands.txt", AssetType.TEXT);
 		
 		className.set ("a/info/events.json", __ASSET__a_info_events_json);
 		type.set ("a/info/events.json", AssetType.TEXT);
@@ -761,6 +769,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:keep class __ASSET__a_font_main_ttf extends openfl.text.Font { }
 @:keep class __ASSET__a_img_bg0_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep class __ASSET__a_img_char0_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep class __ASSET__a_info_commands_txt extends openfl.utils.ByteArray { }
 @:keep class __ASSET__a_info_events_json extends openfl.utils.ByteArray { }
 @:keep class __ASSET__a_info_passages_json extends openfl.utils.ByteArray { }
 @:keep class __ASSET__a_openfl_svg extends openfl.utils.ByteArray { }
@@ -781,6 +790,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 
 
 
+
 #elseif (windows || mac || linux)
 
 
@@ -790,6 +800,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:font("assets/font/main.ttf") class __ASSET__a_font_main_ttf extends flash.text.Font {}
 @:bitmap("assets/img/bg0.png") class __ASSET__a_img_bg0_png extends flash.display.BitmapData {}
 @:bitmap("assets/img/char0.png") class __ASSET__a_img_char0_png extends flash.display.BitmapData {}
+@:file("assets/info/commands.txt") class __ASSET__a_info_commands_txt extends flash.utils.ByteArray {}
 @:file("assets/info/events.json") class __ASSET__a_info_events_json extends flash.utils.ByteArray {}
 @:file("assets/info/passages.json") class __ASSET__a_info_passages_json extends flash.utils.ByteArray {}
 @:file("assets/openfl.svg") class __ASSET__a_openfl_svg extends flash.utils.ByteArray {}

@@ -8,7 +8,7 @@ using System.Web.Helpers;
 using System.Diagnostics;
 using System.Windows.Forms;
 
-namespace StoryDevSimpler
+namespace StoryDev
 {
     public class Project
     {
@@ -23,15 +23,6 @@ namespace StoryDevSimpler
         //public static string WINDOWS = "windows";
         //public static string MAC = "mac";
         //public static string LINUX = "linux";
-
-        public static bool IsLinux
-        {
-            get
-            {
-                int p = (int)Environment.OSVersion.Platform;
-                return (p == 4) || (p == 6) || (p == 128);
-            }
-        }
 
         public Project(string file = "")
         {
@@ -120,18 +111,9 @@ namespace StoryDevSimpler
             try
             {
                 ExportJson();
-                if (!IsLinux)
-                    Process.Start("cmd.exe", "/c haxelib run openfl build \"" + path + "\\engine\\project.xml\" " + target);
-                else
-                    Process.Start("terminal", "/c haxelib run openfl build \"" + path + "\\engine\\project.xml\" " + target);
-                //if ((target == MAC || target == LINUX) && !IsLinux)
-                //    MessageBox.Show("Cannot test UNIX application on Windows.");
-                //else if (target == MAC && IsLinux)
-                //    Process.Start(path + "/engine/bin/mac64/neko/bin/StoryDev.app");
-                //else if (target == LINUX && IsLinux)
-                //    Process.Start(path + "/engine/bin/linux64/neko/bin/StoryDev");
-                //else if (target == WINDOWS)
-                //    Process.Start(path + "/engine/bin/windows/neko/bin/StoryDev.exe");
+                var cmd = Process.Start("cmd.exe", "/c haxelib run openfl build \"" + path + "\\engine\\project.xml\" " + target);
+                
+                cmd.WaitForExit();
                 if (target == FLASH)
                     Process.Start(path + "/engine/bin/flash/bin/StoryDev.swf");
             }

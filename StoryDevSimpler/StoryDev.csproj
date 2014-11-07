@@ -7,8 +7,8 @@
     <ProjectGuid>{0672B1EE-4B52-4333-B44A-BBBBEC4EE7CD}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>StoryDevSimpler</RootNamespace>
-    <AssemblyName>StoryDevSimpler</AssemblyName>
+    <RootNamespace>StoryDev</RootNamespace>
+    <AssemblyName>StoryDev</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -32,6 +32,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>StoryDev.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>SD Logo.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="FastColoredTextBox">
       <HintPath>..\..\..\..\..\Downloads\FastColoredTextBox-master\Binary\FastColoredTextBox.dll</HintPath>
@@ -54,12 +60,11 @@
     </Compile>
     <Compile Include="CopyDir.cs" />
     <Compile Include="GameEvent.cs" />
-    <Compile Include="Gkh.cs" />
-    <Compile Include="JsonResult.cs">
+    <Compile Include="InstallHaxe.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="JsonResult.Designer.cs">
-      <DependentUpon>JsonResult.cs</DependentUpon>
+    <Compile Include="InstallHaxe.Designer.cs">
+      <DependentUpon>InstallHaxe.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -83,8 +88,8 @@
     <Compile Include="RichAndCode.Designer.cs">
       <DependentUpon>RichAndCode.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="JsonResult.resx">
-      <DependentUpon>JsonResult.cs</DependentUpon>
+    <EmbeddedResource Include="InstallHaxe.resx">
+      <DependentUpon>InstallHaxe.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -100,10 +105,12 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="RichAndCode.resx">
       <DependentUpon>RichAndCode.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -113,6 +120,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SD Logo.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

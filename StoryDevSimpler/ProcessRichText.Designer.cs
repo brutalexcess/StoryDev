@@ -1,4 +1,4 @@
-﻿namespace StoryDevSimpler
+﻿namespace StoryDev
 {
     partial class ProcessRichText
     {

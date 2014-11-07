@@ -6,7 +6,7 @@ using System.Drawing;
 using FastColoredTextBoxNS;
 using System.Text.RegularExpressions;
 
-namespace StoryDevSimpler
+namespace StoryDev
 {
     public class CodeWindow : FastColoredTextBox
     {
