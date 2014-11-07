@@ -21,6 +21,10 @@ Once this is all done, you will need to also install the following libraries, by
 
 These are both required by the engine for it to compile successfully. Any problems may be reported here in the Issues, or the best place would be to report them onto our [forums](http://www.colour-id.net/apps/forums/).
 
+Credits
+=======
+Special thanks to Pavel Torgashov for his [Fast Colored Text Box](http://www.codeproject.com/Articles/161871/Fast-Colored-TextBox-for-syntax-highlighting) library, helping massively improve the feeling of coding for this project.
+
 Documentation
 =============
 Documentation is currently being written and is in-progress. Thank you for your patience.
