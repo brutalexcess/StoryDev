@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Web.Helpers;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace StoryDev
 {
@@ -17,6 +18,7 @@ namespace StoryDev
         private int previousPassage;
         private int previousEvent;
         private int previousType;
+        private string previousPath;
 
         public MainForm()
         {
@@ -28,6 +30,10 @@ namespace StoryDev
 
             if (!Properties.Settings.Default.started)
                 new InstallHaxe().ShowDialog();
+            if (Properties.Settings.Default.previousPath == "")
+                previousPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            else
+                previousPath = Properties.Settings.Default.previousPath;
         }
 
         private void btnProcess_Click(object sender, EventArgs e)
@@ -65,21 +71,29 @@ namespace StoryDev
         {
             var saveProj = new SaveFileDialog();
             saveProj.Filter = "StoryDev Project|*.sdp";
-            saveProj.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            if (p == null)
+            saveProj.InitialDirectory = previousPath;
+            saveProj.FileOk += saveProj_FileOk;
+            saveProj.ShowDialog();
+        }
+
+        void saveProj_FileOk(object sender, CancelEventArgs e)
+        {
+            var saveProj = sender as SaveFileDialog;
+            if (!e.Cancel)
             {
-                saveProj.ShowDialog();
-                p = new Project(saveProj.FileName);
-            }
-            else
-            {
-                var response = MessageBox.Show("Do you wish to save the current project?", "Confirm", MessageBoxButtons.YesNoCancel);
-                if (response == System.Windows.Forms.DialogResult.Yes)
-                    p.Save(p.file);
-                else if (response == System.Windows.Forms.DialogResult.No)
+                if (p == null)
                 {
-                    saveProj.ShowDialog();
-                    p = new Project(saveProj.FileName);
+                    p = new Project(lastDirectory(saveProj.FileName));
+                }
+                else
+                {
+                    var response = MessageBox.Show("Do you wish to save the current project?", "Confirm", MessageBoxButtons.YesNoCancel);
+                    if (response == System.Windows.Forms.DialogResult.Yes)
+                        p.Save(p.file);
+                    else if (response == System.Windows.Forms.DialogResult.No)
+                    {
+                        p = new Project(lastDirectory(saveProj.FileName));
+                    }
                 }
             }
         }
@@ -162,18 +176,21 @@ namespace StoryDev
 
         private void txtSearch_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            if (p != null)
             {
-                if (cmbType.SelectedIndex == 0 && txtSearch.Text != "")
+                if (e.KeyCode == Keys.Enter)
                 {
-                    PopulateList("Passages", txtSearch.Text);
+                    if (cmbType.SelectedIndex == 0 && txtSearch.Text != "")
+                    {
+                        PopulateList("Passages", txtSearch.Text);
+                    }
+                    else if (cmbType.SelectedIndex == 1 && txtSearch.Text != "")
+                    {
+                        PopulateList("Game Events", txtSearch.Text);
+                    }
+                    else
+                        PopulateList((string)cmbType.SelectedItem);
                 }
-                else if (cmbType.SelectedIndex == 1 && txtSearch.Text != "")
-                {
-                    PopulateList("Game Events", txtSearch.Text);
-                }
-                else
-                    PopulateList((string)cmbType.SelectedItem);
             }
         }
 
@@ -182,15 +199,22 @@ namespace StoryDev
             if ((previousPassage == -1 && type == "Passages") || (previousEvent == -1 && type == "Game Events"))
                 return;
 
+            if (!isNumeric(txtID.Text))
+            {
+                MessageBox.Show("The ID provided is not a valid integer value.");
+                return;
+            }
+
             if (type == "Passages" && selected > -1)
             {
                 foreach (Passage passage in p.passages)
                 {
                     if (passage.id == selected)
                     {
-                        var index = p.passages[selected];
+                        var index = p.passages[p.passages.IndexOf(passage)];
                         index.title = txtTitle.Text;
-                        index.id = Convert.ToInt32(txtID.Text);
+                        if (!conflictID("Passages", Convert.ToInt32(txtID.Text)))
+                            index.id = Convert.ToInt32(txtID.Text);
                         var richCode = pnlMain.Controls[0] as RichAndCode;
                         index.htmlText = richCode.RawText;
                         index.text = richCode.CodeText;
@@ -205,7 +229,9 @@ namespace StoryDev
                 {
                     if (ge.id == selected)
                     {
-                        var index = p.events[selected];
+                        var index = p.events[p.events.IndexOf(ge)];
+                        if (!conflictID("Game Events", Convert.ToInt32(txtID.Text)))
+                            index.id = Convert.ToInt32(txtID.Text);
                         index.title = txtTitle.Text;
                         var code = pnlMain.Controls[0] as CodeWindow;
                         index.code = code.Text;
@@ -214,6 +240,42 @@ namespace StoryDev
                 }
 
             }
+        }
+
+        private bool conflictID(string type, int id)
+        {
+            if (type == "Passages")
+            {
+                var amount = p.passages.Count;
+                foreach (Passage passage in p.passages)
+                {
+                    if (passage.id == id)
+                        return true;
+                    else if (amount == 1)
+                        return false;
+                    else
+                        amount--;
+                }
+            }
+            else
+            {
+                var amount = p.events.Count;
+                foreach (GameEvent e in p.events)
+                {
+                    if (e.id == id)
+                        return true;
+                    else if (amount == 1)
+                        return false;
+                    else
+                        amount--;
+                }
+            }
+            return false;
+        }
+
+        private bool isNumeric(string value)
+        {
+            return Regex.IsMatch(value, @"\d+$");
         }
 
         private void lbItems_SelectedIndexChanged(object sender, EventArgs e)
@@ -262,33 +324,42 @@ namespace StoryDev
 
         private void saveProjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            p.Save(p.file);
+            if (p != null)
+                p.Save(p.file);
         }
 
         private void loadProjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var ofd = new OpenFileDialog();
             ofd.Filter = "StoryDev Project|*.sdp";
-            ofd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            if (p != null)
+            ofd.InitialDirectory = previousPath;
+            ofd.FileOk += ofd_FileOk;
+            ofd.ShowDialog();
+        }
+
+        void ofd_FileOk(object sender, CancelEventArgs e)
+        {
+            var ofd = sender as OpenFileDialog;
+            if (!e.Cancel)
             {
-                var response = MessageBox.Show("Do you wish to save the current project?", "Confirm", MessageBoxButtons.YesNoCancel);
-                if (response == System.Windows.Forms.DialogResult.Yes)
-                    p.Save(p.file);
-                else if (response == System.Windows.Forms.DialogResult.No)
+                if (p != null)
                 {
-                    ofd.ShowDialog();
-                    if (ofd.FileName != "")
-                        p.Load(ofd.FileName);
+                    var response = MessageBox.Show("Do you wish to save the current project?", "Confirm", MessageBoxButtons.YesNoCancel);
+                    if (response == System.Windows.Forms.DialogResult.Yes)
+                        p.Save(p.file);
+                    else if (response == System.Windows.Forms.DialogResult.No)
+                    {
+                        if (ofd.FileName != "")
+                            p.Load(lastDirectory(ofd.FileName));
+                    }
                 }
-            }
-            else
-            {
-                ofd.ShowDialog();
-                if (ofd.FileName != "")
+                else
                 {
-                    p = new Project();
-                    p.Load(ofd.FileName);
+                    if (ofd.FileName != "")
+                    {
+                        p = new Project();
+                        p.Load(lastDirectory(ofd.FileName));
+                    }
                 }
             }
         }
@@ -363,12 +434,83 @@ namespace StoryDev
 
         private void documentationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            Process.Start("https://github.com/brutalexcess/StoryDev-Engine/wiki");
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Properties.Settings.Default.Save();
+        }
+
+        private void videoTutorialsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://www.youtube.com/playlist?list=PLvi6G1HrMyFLUGFOhEX5qu0C5lil0Jntn");
+        }
+
+        private void importJSONToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var ofdImport = new OpenFileDialog();
+            ofdImport.Filter = "JSON Files|*.json";
+            ofdImport.InitialDirectory = previousPath;
+            ofdImport.FileOk += ofdImport_FileOk;
+            if (p == null)
+            {
+                var response = MessageBox.Show("A project has not yet been created, create one now?", "Confirm", MessageBoxButtons.YesNoCancel);
+                if (response == System.Windows.Forms.DialogResult.Yes)
+                {
+                    var saveProj = new SaveFileDialog();
+                    saveProj.Filter = "StoryDev Project|*.sdp";
+                    saveProj.InitialDirectory = previousPath;
+                    saveProj.FileOk += saveProj_FileOk;
+                    saveProj.ShowDialog();
+                }
+                else
+                    return;
+
+                if (p != null)
+                    ofdImport.ShowDialog();
+            }
+            else
+                ofdImport.ShowDialog();
+        }
+
+        void ofdImport_FileOk(object sender, CancelEventArgs e)
+        {
+            var ofdImport = sender as OpenFileDialog;
+            if (!e.Cancel)
+            {
+                var file = ofdImport.FileName;
+                var import = new ImportJson(p);
+                import.FullPath = file;
+                if (file.EndsWith("passages.json"))
+                {
+                    import.FileName = "passages.json";
+                    import.ShowDialog();
+                }
+                else if (file.EndsWith("events.json"))
+                {
+                    import.FileName = "events.json";
+                    import.ShowDialog();
+                }
+            }
+        }
+
+        private string lastDirectory(string file)
+        {
+            previousPath = file.Substring(0, file.LastIndexOf("\\"));
+            Properties.Settings.Default.previousPath = previousPath;
+            return file;
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            if (p != null)
+            {
+                if (previousType == 0)
+                    PopulateList("Passages");
+                else
+                    PopulateList("Game Events");
+            }
         }
 
     }

@@ -12,3 +12,4 @@ C:\Users\Brutal\Documents\Visual Studio 2013\Projects\StoryDev Simple\StoryDevSi
 C:\Users\Brutal\Documents\Visual Studio 2013\Projects\StoryDev Simple\StoryDevSimpler\obj\Debug\StoryDev.ProcessRichText.resources
 C:\Users\Brutal\Documents\Visual Studio 2013\Projects\StoryDev Simple\StoryDevSimpler\obj\Debug\StoryDev.RichAndCode.resources
 C:\Users\Brutal\Documents\Visual Studio 2013\Projects\StoryDev Simple\StoryDevSimpler\obj\Debug\StoryDev.csprojResolveAssemblyReference.cache
+C:\Users\Brutal\Documents\Visual Studio 2013\Projects\StoryDev Simple\StoryDevSimpler\obj\Debug\StoryDev.ImportJson.resources

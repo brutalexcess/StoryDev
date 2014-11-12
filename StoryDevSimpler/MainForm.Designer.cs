@@ -36,6 +36,7 @@
             this.cmsOptions = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.documentationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.videoTutorialsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importJSONToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,15 +49,16 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtID = new System.Windows.Forms.TextBox();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.btnOptions = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnAddGameEvent = new System.Windows.Forms.Button();
             this.btnAddPassage = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.pnlMain = new System.Windows.Forms.Panel();
+            this.btnRefresh = new System.Windows.Forms.Button();
             this.lbItems = new System.Windows.Forms.ListBox();
             this.txtSearch = new System.Windows.Forms.TextBox();
-            this.pnlMain = new System.Windows.Forms.Panel();
-            this.btnOptions = new System.Windows.Forms.Button();
             this.cmsItems.SuspendLayout();
             this.cmsOptions.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -92,11 +94,12 @@
             this.cmsOptions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.documentationToolStripMenuItem,
             this.videoTutorialsToolStripMenuItem,
+            this.importJSONToolStripMenuItem,
             this.saveProjectToolStripMenuItem,
             this.loadProjectToolStripMenuItem,
             this.newProjectToolStripMenuItem});
             this.cmsOptions.Name = "cmsOptions";
-            this.cmsOptions.Size = new System.Drawing.Size(158, 114);
+            this.cmsOptions.Size = new System.Drawing.Size(158, 136);
             // 
             // documentationToolStripMenuItem
             // 
@@ -110,6 +113,14 @@
             this.videoTutorialsToolStripMenuItem.Name = "videoTutorialsToolStripMenuItem";
             this.videoTutorialsToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
             this.videoTutorialsToolStripMenuItem.Text = "Video Tutorials";
+            this.videoTutorialsToolStripMenuItem.Click += new System.EventHandler(this.videoTutorialsToolStripMenuItem_Click);
+            // 
+            // importJSONToolStripMenuItem
+            // 
+            this.importJSONToolStripMenuItem.Name = "importJSONToolStripMenuItem";
+            this.importJSONToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.importJSONToolStripMenuItem.Text = "Import JSON...";
+            this.importJSONToolStripMenuItem.Click += new System.EventHandler(this.importJSONToolStripMenuItem_Click);
             // 
             // saveProjectToolStripMenuItem
             // 
@@ -211,7 +222,6 @@
             // 
             this.txtID.Location = new System.Drawing.Point(168, 8);
             this.txtID.Name = "txtID";
-            this.txtID.ReadOnly = true;
             this.txtID.Size = new System.Drawing.Size(142, 20);
             this.txtID.TabIndex = 14;
             // 
@@ -226,6 +236,17 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(784, 27);
             this.panel3.TabIndex = 16;
+            // 
+            // btnOptions
+            // 
+            this.btnOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOptions.Location = new System.Drawing.Point(683, 2);
+            this.btnOptions.Name = "btnOptions";
+            this.btnOptions.Size = new System.Drawing.Size(94, 23);
+            this.btnOptions.TabIndex = 18;
+            this.btnOptions.Text = "Options";
+            this.btnOptions.UseVisualStyleBackColor = true;
+            this.btnOptions.Click += new System.EventHandler(this.btnOptions_Click);
             // 
             // btnSave
             // 
@@ -263,7 +284,6 @@
             // panel2
             // 
             this.panel2.Controls.Add(this.panel4);
-            this.panel2.Controls.Add(this.txtSearch);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel2.Location = new System.Drawing.Point(0, 34);
             this.panel2.Name = "panel2";
@@ -273,31 +293,13 @@
             // panel4
             // 
             this.panel4.Controls.Add(this.lbItems);
+            this.panel4.Controls.Add(this.txtSearch);
+            this.panel4.Controls.Add(this.btnRefresh);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel4.Location = new System.Drawing.Point(0, 20);
+            this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(145, 456);
+            this.panel4.Size = new System.Drawing.Size(145, 476);
             this.panel4.TabIndex = 2;
-            // 
-            // lbItems
-            // 
-            this.lbItems.ContextMenuStrip = this.cmsItems;
-            this.lbItems.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbItems.FormattingEnabled = true;
-            this.lbItems.Location = new System.Drawing.Point(0, 0);
-            this.lbItems.Name = "lbItems";
-            this.lbItems.Size = new System.Drawing.Size(145, 456);
-            this.lbItems.TabIndex = 2;
-            this.lbItems.SelectedIndexChanged += new System.EventHandler(this.lbItems_SelectedIndexChanged);
-            // 
-            // txtSearch
-            // 
-            this.txtSearch.Dock = System.Windows.Forms.DockStyle.Top;
-            this.txtSearch.Location = new System.Drawing.Point(0, 0);
-            this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(145, 20);
-            this.txtSearch.TabIndex = 1;
-            this.txtSearch.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyDown);
             // 
             // pnlMain
             // 
@@ -307,16 +309,34 @@
             this.pnlMain.Size = new System.Drawing.Size(639, 476);
             this.pnlMain.TabIndex = 18;
             // 
-            // btnOptions
+            // btnRefresh
             // 
-            this.btnOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOptions.Location = new System.Drawing.Point(683, 2);
-            this.btnOptions.Name = "btnOptions";
-            this.btnOptions.Size = new System.Drawing.Size(94, 23);
-            this.btnOptions.TabIndex = 18;
-            this.btnOptions.Text = "Options";
-            this.btnOptions.UseVisualStyleBackColor = true;
-            this.btnOptions.Click += new System.EventHandler(this.btnOptions_Click);
+            this.btnRefresh.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnRefresh.Location = new System.Drawing.Point(0, 0);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(145, 23);
+            this.btnRefresh.TabIndex = 0;
+            this.btnRefresh.Text = "Refresh";
+            this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            // 
+            // lbItems
+            // 
+            this.lbItems.ContextMenuStrip = this.cmsItems;
+            this.lbItems.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbItems.FormattingEnabled = true;
+            this.lbItems.Location = new System.Drawing.Point(0, 43);
+            this.lbItems.Name = "lbItems";
+            this.lbItems.Size = new System.Drawing.Size(145, 433);
+            this.lbItems.TabIndex = 4;
+            // 
+            // txtSearch
+            // 
+            this.txtSearch.Dock = System.Windows.Forms.DockStyle.Top;
+            this.txtSearch.Location = new System.Drawing.Point(0, 23);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(145, 20);
+            this.txtSearch.TabIndex = 3;
             // 
             // MainForm
             // 
@@ -330,7 +350,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "StoryDev Editor";
+            this.Text = " ";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.cmsItems.ResumeLayout(false);
@@ -339,8 +359,8 @@
             this.panel1.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -369,11 +389,13 @@
         private System.Windows.Forms.Button btnAddGameEvent;
         private System.Windows.Forms.Button btnAddPassage;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.Panel pnlMain;
         private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.ListBox lbItems;
         private System.Windows.Forms.Button btnOptions;
+        private System.Windows.Forms.ToolStripMenuItem importJSONToolStripMenuItem;
+        private System.Windows.Forms.ListBox lbItems;
+        private System.Windows.Forms.TextBox txtSearch;
+        private System.Windows.Forms.Button btnRefresh;
     }
 }
 

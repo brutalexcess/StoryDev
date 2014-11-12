@@ -561,6 +561,7 @@ class GameState extends Sprite
 		_interp.variables.set("setBGColor", setBGColour);
 		_interp.variables.set("setPassageColor", setPassageColour);
 		_interp.variables.set("setMenuTextColor", setMenuTextColour);
+		_interp.variables.set("newLine", newLine);
 
 		_parser.allowJSON = true;
 		_parser.allowTypes = true;
@@ -613,7 +614,7 @@ class GameState extends Sprite
 		stage.addEventListener(MouseEvent.MOUSE_WHEEL, onScroll);
 	}
 
-	private function gotoPassage(id:Int = 0, ?refresh:Bool):Void
+	private function gotoPassage(id:Int = 0):Void
 	{
 		_parsedLinkCode = [];
 		_parsedLinkIndexes = [];
@@ -626,10 +627,7 @@ class GameState extends Sprite
 			show(passage.htmlText); 
 		}
 		runCode(passage.text);
-		if (!refresh)
-			callEvents();
-		else
-			callTempEvents();
+		callEvents();
 			
 		applyFormatting();
 	}
@@ -669,6 +667,11 @@ class GameState extends Sprite
 			}
 		}
 	}
+	
+	private function newLine():String
+	{
+		return "\n";
+	}
 
 	private function runCode(s:String):Void
 	{
@@ -694,6 +697,7 @@ class GameState extends Sprite
 	private function refreshPassage():Void 
 	{ 
 		_storyText.text = _storyString;
+		applyFormatting();
 	}
 	
 	private function show(s:String):Void
@@ -851,20 +855,11 @@ class GameState extends Sprite
 		{
 			if (GameEvent.gameEvents[i].id == id)
 			{
-				GameEvent.tempEvent.push(GameEvent.gameEvents[i]);
+				runCode(GameEvent.gameEvents[i].code);
 				break;
 			}
 		}
-		gotoPassage(_currentPassage, true);
-	}
-	
-	private function callTempEvents():Void
-	{
-		for (i in 0...GameEvent.tempEvent.length)
-		{
-			runCode(GameEvent.tempEvent[i].code);
-		}
-		GameEvent.tempEvent.splice(0, GameEvent.tempEvent.length);
+		applyFormatting();
 	}
 	
 	private function callEvents():Void
@@ -873,6 +868,7 @@ class GameState extends Sprite
 		{
 			runCode(GameEvent.queuedEvents[i].code);
 		}
+		applyFormatting();
 	}
 	
 	private function transitionCharImage(x:Float, y:Float, width:Float, height:Float, time:Float):Void 
@@ -891,10 +887,5 @@ class GameState extends Sprite
 		Actuate.tween(_storyText, time, { x:x, y:y, width:width, height:height} );
 		Actuate.tween(_storyBG, time, { x:x, y:y, width:width, height:height } );
 	}
-	
-}
-
-interface ExtendedBitmap
-{
 	
 }

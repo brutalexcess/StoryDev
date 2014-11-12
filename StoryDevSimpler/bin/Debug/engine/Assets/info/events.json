@@ -5,6 +5,6 @@
 	},
 	{
 		"id":1,
-		"code":"y += 3;j += 4;appendShow('\nY is ' + y + ' and j is ' + j + '\n');"
+		"code":"y += 3; \nj += 4; \nappendShow('\nY is ' + y + ' and j is ' + j + '\n');"
 	}
 ]

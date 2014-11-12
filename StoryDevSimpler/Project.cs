@@ -111,11 +111,11 @@ namespace StoryDev
         {
             var jsonPassages = Json.Encode(passages);
             jsonPassages = jsonPassages.Replace("\\u0027", "'");
-            jsonPassages = jsonPassages.Replace("\\r", " ");
+            jsonPassages = jsonPassages.Replace("\\r", "");
             jsonPassages = jsonPassages.Replace("\\\\", "\\");
             var jsonEvents = Json.Encode(events);
             jsonEvents = jsonEvents.Replace("\\u0027", "'");
-            jsonEvents = jsonEvents.Replace("\\r", " ");
+            jsonEvents = jsonEvents.Replace("\\r", "");
             jsonEvents = jsonEvents.Replace("\\\\", "\\");
 
 

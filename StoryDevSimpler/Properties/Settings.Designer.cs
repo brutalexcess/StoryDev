@@ -34,5 +34,17 @@ namespace StoryDev.Properties {
                 this["started"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string previousPath {
+            get {
+                return ((string)(this["previousPath"]));
+            }
+            set {
+                this["previousPath"] = value;
+            }
+        }
     }
 }

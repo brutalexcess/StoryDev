@@ -29,7 +29,8 @@ namespace StoryDev
                                              "Math.isFinite();", "Math.isNaN();", "Math.log();", "Math.max();",
                                              "Math.min();", "Math.pow();", "Math.random();", "Math.round();", 
                                              "Math.sin();", "Math.sqrt();", "Math.tan();", "rand();", "setLinkFormat();",
-                                             "setTextFormat();", "setBGColor();", "setPassageColor();", "setMenuTextColor();"};
+                                             "setTextFormat();", "setBGColor();", "setPassageColor();", "setMenuTextColor();",
+                                             "newLine()", "__currentPassage", "__lastPassage"};
 
         public CodeWindow()
         {
