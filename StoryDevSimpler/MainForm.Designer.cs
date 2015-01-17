@@ -51,14 +51,17 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.btnOptions = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
-            this.btnAddGameEvent = new System.Windows.Forms.Button();
             this.btnAddPassage = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.pnlMain = new System.Windows.Forms.Panel();
-            this.btnRefresh = new System.Windows.Forms.Button();
             this.lbItems = new System.Windows.Forms.ListBox();
             this.txtSearch = new System.Windows.Forms.TextBox();
+            this.btnRefresh = new System.Windows.Forms.Button();
+            this.pnlMain = new System.Windows.Forms.Panel();
+            this.pluginsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pluginManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.cmsItems.SuspendLayout();
             this.cmsOptions.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -92,6 +95,8 @@
             // cmsOptions
             // 
             this.cmsOptions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pluginsToolStripMenuItem,
+            this.toolStripSeparator2,
             this.documentationToolStripMenuItem,
             this.videoTutorialsToolStripMenuItem,
             this.importJSONToolStripMenuItem,
@@ -99,7 +104,7 @@
             this.loadProjectToolStripMenuItem,
             this.newProjectToolStripMenuItem});
             this.cmsOptions.Name = "cmsOptions";
-            this.cmsOptions.Size = new System.Drawing.Size(158, 136);
+            this.cmsOptions.Size = new System.Drawing.Size(158, 164);
             // 
             // documentationToolStripMenuItem
             // 
@@ -175,7 +180,7 @@
             this.cmbType.FormattingEnabled = true;
             this.cmbType.Items.AddRange(new object[] {
             "Passages",
-            "Game Events"});
+            "Game Events (Redundant)"});
             this.cmbType.Location = new System.Drawing.Point(12, 7);
             this.cmbType.Name = "cmbType";
             this.cmbType.Size = new System.Drawing.Size(121, 21);
@@ -229,7 +234,6 @@
             // 
             this.panel3.Controls.Add(this.btnOptions);
             this.panel3.Controls.Add(this.btnSave);
-            this.panel3.Controls.Add(this.btnAddGameEvent);
             this.panel3.Controls.Add(this.btnAddPassage);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel3.Location = new System.Drawing.Point(0, 510);
@@ -251,24 +255,13 @@
             // btnSave
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnSave.Location = new System.Drawing.Point(226, 2);
+            this.btnSave.Location = new System.Drawing.Point(114, 2);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(98, 23);
             this.btnSave.TabIndex = 18;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
-            // btnAddGameEvent
-            // 
-            this.btnAddGameEvent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnAddGameEvent.Location = new System.Drawing.Point(114, 2);
-            this.btnAddGameEvent.Name = "btnAddGameEvent";
-            this.btnAddGameEvent.Size = new System.Drawing.Size(105, 23);
-            this.btnAddGameEvent.TabIndex = 16;
-            this.btnAddGameEvent.Text = "Add Game Event";
-            this.btnAddGameEvent.UseVisualStyleBackColor = true;
-            this.btnAddGameEvent.Click += new System.EventHandler(this.btnAddGameEvent_Click);
             // 
             // btnAddPassage
             // 
@@ -301,13 +294,25 @@
             this.panel4.Size = new System.Drawing.Size(145, 476);
             this.panel4.TabIndex = 2;
             // 
-            // pnlMain
+            // lbItems
             // 
-            this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlMain.Location = new System.Drawing.Point(145, 34);
-            this.pnlMain.Name = "pnlMain";
-            this.pnlMain.Size = new System.Drawing.Size(639, 476);
-            this.pnlMain.TabIndex = 18;
+            this.lbItems.ContextMenuStrip = this.cmsItems;
+            this.lbItems.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbItems.FormattingEnabled = true;
+            this.lbItems.Location = new System.Drawing.Point(0, 43);
+            this.lbItems.Name = "lbItems";
+            this.lbItems.Size = new System.Drawing.Size(145, 433);
+            this.lbItems.TabIndex = 4;
+            this.lbItems.SelectedIndexChanged += new System.EventHandler(this.lbItems_SelectedIndexChanged);
+            // 
+            // txtSearch
+            // 
+            this.txtSearch.Dock = System.Windows.Forms.DockStyle.Top;
+            this.txtSearch.Location = new System.Drawing.Point(0, 23);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(145, 20);
+            this.txtSearch.TabIndex = 3;
+            this.txtSearch.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyDown);
             // 
             // btnRefresh
             // 
@@ -320,23 +325,38 @@
             this.btnRefresh.UseVisualStyleBackColor = true;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
-            // lbItems
+            // pnlMain
             // 
-            this.lbItems.ContextMenuStrip = this.cmsItems;
-            this.lbItems.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbItems.FormattingEnabled = true;
-            this.lbItems.Location = new System.Drawing.Point(0, 43);
-            this.lbItems.Name = "lbItems";
-            this.lbItems.Size = new System.Drawing.Size(145, 433);
-            this.lbItems.TabIndex = 4;
+            this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlMain.Location = new System.Drawing.Point(145, 34);
+            this.pnlMain.Name = "pnlMain";
+            this.pnlMain.Size = new System.Drawing.Size(639, 476);
+            this.pnlMain.TabIndex = 18;
             // 
-            // txtSearch
+            // pluginsToolStripMenuItem
             // 
-            this.txtSearch.Dock = System.Windows.Forms.DockStyle.Top;
-            this.txtSearch.Location = new System.Drawing.Point(0, 23);
-            this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(145, 20);
-            this.txtSearch.TabIndex = 3;
+            this.pluginsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pluginManagerToolStripMenuItem,
+            this.toolStripSeparator1});
+            this.pluginsToolStripMenuItem.Name = "pluginsToolStripMenuItem";
+            this.pluginsToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.pluginsToolStripMenuItem.Text = "Plugins";
+            // 
+            // pluginManagerToolStripMenuItem
+            // 
+            this.pluginManagerToolStripMenuItem.Name = "pluginManagerToolStripMenuItem";
+            this.pluginManagerToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.pluginManagerToolStripMenuItem.Text = "Plugin Manager...";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(164, 6);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(154, 6);
             // 
             // MainForm
             // 
@@ -350,7 +370,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = " ";
+            this.Text = "StoryDev";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.cmsItems.ResumeLayout(false);
@@ -386,7 +406,6 @@
         private System.Windows.Forms.TextBox txtID;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.Button btnAddGameEvent;
         private System.Windows.Forms.Button btnAddPassage;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel pnlMain;
@@ -396,6 +415,10 @@
         private System.Windows.Forms.ListBox lbItems;
         private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.Button btnRefresh;
+        private System.Windows.Forms.ToolStripMenuItem pluginsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pluginManagerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     }
 }
 

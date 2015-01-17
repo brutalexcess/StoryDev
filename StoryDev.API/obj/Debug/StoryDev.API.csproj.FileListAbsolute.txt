@@ -1,0 +1,5 @@
+C:\Users\Brutal\Documents\Visual Studio 2013\Projects\StoryDev Simple\StoryDev.API\obj\Debug\StoryDev.API.csprojResolveAssemblyReference.cache
+C:\Users\Brutal\Documents\Visual Studio 2013\Projects\StoryDev Simple\StoryDev.API\bin\Debug\StoryDev.API.dll
+C:\Users\Brutal\Documents\Visual Studio 2013\Projects\StoryDev Simple\StoryDev.API\bin\Debug\StoryDev.API.pdb
+C:\Users\Brutal\Documents\Visual Studio 2013\Projects\StoryDev Simple\StoryDev.API\obj\Debug\StoryDev.API.dll
+C:\Users\Brutal\Documents\Visual Studio 2013\Projects\StoryDev Simple\StoryDev.API\obj\Debug\StoryDev.API.pdb

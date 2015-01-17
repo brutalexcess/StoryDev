@@ -20,8 +20,7 @@ namespace StoryDev
         private readonly string[] commands = { "appendShow();", "appendLink();", "gotoPassage();", "string();", "trace();",
                                              "playSound();", "modifyChannel();", "stopChannel();", "showCharImage();",
                                              "removeCharImage();", "showBGImage();", "removeBGImage();", "goBack();",
-                                             "parseJson();", "stringifyJson();", "startEvent();", "stopEvent();", 
-                                             "callEvent();", "transCharImage();", "transPassage();", "__stageWidth",
+                                             "parseJson();", "stringifyJson();", "transCharImage();", "transPassage();", "__stageWidth",
                                              "__stageHeight", "Math", "Math.NEGATIVE_INFINITY", "Math.NaN", "Math.PI",
                                              "Math.POSITIVE_INFINITY", "Math.abs();", "Math.acos();", "Math.asin();",
                                              "Math.atan();", "Math.atan2();", "Math.ceil();", "Math.cos();", "Math.exp();",
@@ -30,7 +29,7 @@ namespace StoryDev
                                              "Math.min();", "Math.pow();", "Math.random();", "Math.round();", 
                                              "Math.sin();", "Math.sqrt();", "Math.tan();", "rand();", "setLinkFormat();",
                                              "setTextFormat();", "setBGColor();", "setPassageColor();", "setMenuTextColor();",
-                                             "newLine()", "__currentPassage", "__lastPassage"};
+                                             "newLine()", "__currentPassage", "__lastPassage", "getFileText();"};
 
         public CodeWindow()
         {
@@ -64,7 +63,7 @@ namespace StoryDev
             e.ChangedRange.SetStyle(GreenStyle, @"(/\*.*?\*/)|(/\*.*)", RegexOptions.Singleline);
             e.ChangedRange.SetStyle(GreenStyle, @"(/\*.*?\*/)|(.*\*/)", RegexOptions.Singleline | RegexOptions.RightToLeft);
             e.ChangedRange.SetStyle(MagentaStyle, @"\b\d+[\.]?\d*([eE]\-?\d+)?[lLdDfF]?\b|\b0x[a-fA-F\d]+\b");
-            e.ChangedRange.SetStyle(BlueStyle, @"\b(for|while|if|else|in|var)\b");
+            e.ChangedRange.SetStyle(BlueStyle, @"\b(for|while|if|else|in|var|function|break|continue|Int|Bool|Dynamic|Float|true|false|return)\b");
             
             e.ChangedRange.SetFoldingMarkers("{", "}");
         }

@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Web.Helpers;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using StoryDev.API;
 
 namespace StoryDev
 {
@@ -19,10 +20,31 @@ namespace StoryDev
         private int previousEvent;
         private int previousType;
         private string previousPath;
+        private static List<Plugin> initialisedPlugins;
+
+        public static bool checkPlugin(string author, string title)
+        {
+            foreach (Plugin p in initialisedPlugins)
+            {
+                if (p.Author == author && p.Title == title)
+                    return true;
+            }
+            return false;
+        }
+
+        public static void initialisePlugin(Plugin pl)
+        {
+
+        }
 
         public MainForm()
         {
             InitializeComponent();
+
+            foreach (CodeWindow cw in Controls)
+            {
+                
+            }
 
             previousPassage = -1;
             previousEvent = -1;
@@ -140,7 +162,7 @@ namespace StoryDev
                     }
                 }
             }
-            else if (type == "Game Events")
+            else if (type == "Scenes")
             {
                 foreach (GameEvent e in p.events)
                 {
@@ -164,7 +186,7 @@ namespace StoryDev
                 var ge = new GameEvent();
                 p.AddGameEvent(ge);
                 if (cmbType.SelectedIndex == 1)
-                    PopulateList("Game Events");
+                    PopulateList("Scenes");
                 else
                     cmbType.SelectedIndex = 1;
             }
@@ -186,7 +208,7 @@ namespace StoryDev
                     }
                     else if (cmbType.SelectedIndex == 1 && txtSearch.Text != "")
                     {
-                        PopulateList("Game Events", txtSearch.Text);
+                        PopulateList("Scenes", txtSearch.Text);
                     }
                     else
                         PopulateList((string)cmbType.SelectedItem);
@@ -196,7 +218,7 @@ namespace StoryDev
 
         private void SaveItem(string type, int selected)
         {
-            if ((previousPassage == -1 && type == "Passages") || (previousEvent == -1 && type == "Game Events"))
+            if ((previousPassage == -1 && type == "Passages") || (previousEvent == -1 && type == "Scenes"))
                 return;
 
             if (!isNumeric(txtID.Text))
@@ -223,14 +245,14 @@ namespace StoryDev
                 }
 
             }
-            else if (type == "Game Events" && selected > -1)
+            else if (type == "Scenes" && selected > -1)
             {
                 foreach (GameEvent ge in p.events)
                 {
                     if (ge.id == selected)
                     {
                         var index = p.events[p.events.IndexOf(ge)];
-                        if (!conflictID("Game Events", Convert.ToInt32(txtID.Text)))
+                        if (!conflictID("Scenes", Convert.ToInt32(txtID.Text)))
                             index.id = Convert.ToInt32(txtID.Text);
                         index.title = txtTitle.Text;
                         var code = pnlMain.Controls[0] as CodeWindow;
@@ -398,7 +420,7 @@ namespace StoryDev
                     var id = item.Substring(0, item.IndexOf(":"));
                     var idc = Convert.ToInt32(id);
                     p.RemoveGameEvent(idc);
-                    PopulateList("Game Events");
+                    PopulateList("Scenes");
                 }
             }
         }
@@ -416,7 +438,7 @@ namespace StoryDev
             if (cmbType.SelectedIndex == 0)
                 SaveItem("Passages", previousPassage != -1 ? previousPassage : idc);
             else
-                SaveItem("Game Events", previousEvent != -1 ? previousEvent : idc);
+                SaveItem("Scenes", previousEvent != -1 ? previousEvent : idc);
         }
 
         private void onKeyUp(object sender, KeyEventArgs e)
@@ -440,6 +462,14 @@ namespace StoryDev
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Properties.Settings.Default.Save();
+            if (p != null)
+            {
+                var response = MessageBox.Show("Do you wish to save before closing?", "Confirm", MessageBoxButtons.YesNoCancel);
+                if (response == System.Windows.Forms.DialogResult.Cancel)
+                    e.Cancel = true;
+                else if (response == System.Windows.Forms.DialogResult.Yes)
+                    p.Save(p.file);
+            }
         }
 
         private void videoTutorialsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -487,9 +517,9 @@ namespace StoryDev
                     import.FileName = "passages.json";
                     import.ShowDialog();
                 }
-                else if (file.EndsWith("events.json"))
+                else if (file.EndsWith("scenes.json"))
                 {
-                    import.FileName = "events.json";
+                    import.FileName = "scenes.json";
                     import.ShowDialog();
                 }
             }
@@ -509,7 +539,7 @@ namespace StoryDev
                 if (previousType == 0)
                     PopulateList("Passages");
                 else
-                    PopulateList("Game Events");
+                    PopulateList("Scenes");
             }
         }
 

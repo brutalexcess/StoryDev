@@ -4,6 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoryDev", "StoryDevSimpler\StoryDev.csproj", "{0672B1EE-4B52-4333-B44A-BBBBEC4EE7CD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2D6FED5B-891C-495A-BFA0-658788DDDF12} = {2D6FED5B-891C-495A-BFA0-658788DDDF12}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoryDev.API", "StoryDev.API\StoryDev.API.csproj", "{2D6FED5B-891C-495A-BFA0-658788DDDF12}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +20,10 @@ Global
 		{0672B1EE-4B52-4333-B44A-BBBBEC4EE7CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0672B1EE-4B52-4333-B44A-BBBBEC4EE7CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0672B1EE-4B52-4333-B44A-BBBBEC4EE7CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D6FED5B-891C-495A-BFA0-658788DDDF12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D6FED5B-891C-495A-BFA0-658788DDDF12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D6FED5B-891C-495A-BFA0-658788DDDF12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D6FED5B-891C-495A-BFA0-658788DDDF12}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

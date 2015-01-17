@@ -65,6 +65,7 @@
             this.txtTextEditor.Location = new System.Drawing.Point(3, 3);
             this.txtTextEditor.Multiline = true;
             this.txtTextEditor.Name = "txtTextEditor";
+            this.txtTextEditor.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtTextEditor.Size = new System.Drawing.Size(616, 433);
             this.txtTextEditor.TabIndex = 0;
             // 

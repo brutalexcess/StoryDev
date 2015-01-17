@@ -79,6 +79,18 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Passage.cs" />
+    <Compile Include="PluginDetails.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PluginDetails.Designer.cs">
+      <DependentUpon>PluginDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PluginManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PluginManager.Designer.cs">
+      <DependentUpon>PluginManager.cs</DependentUpon>
+    </Compile>
     <Compile Include="ProcessRichText.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -102,6 +114,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PluginDetails.resx">
+      <DependentUpon>PluginDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PluginManager.resx">
+      <DependentUpon>PluginManager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProcessRichText.resx">
       <DependentUpon>ProcessRichText.cs</DependentUpon>
@@ -132,6 +150,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="SD Logo.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\StoryDev.API\StoryDev.API.csproj">
+      <Project>{2d6fed5b-891c-495a-bfa0-658788dddf12}</Project>
+      <Name>StoryDev.API</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
