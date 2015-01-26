@@ -2,7 +2,7 @@ StoryDev
 ========
 This is an engine and interactive story editor in-one to develop games with a focus on story.
 
-You may find it easier to install this product, without the source code, by downloading the [ZIP file from MEGA](https://mega.co.nz/#!tIN2EYbL!neb4j5Guc2PtWIQvEmnTOt8UrfRL3B_1RHMBlkzM_48).
+You may find it easier to install this product, without the source code, by downloading the [ZIP file from MEGA](https://mega.co.nz/#!UZcSRKiS!zVciEpogoY4MbgEgmAnL63AA5_U3NIFC5H1Vh1BMRdg).
 
 Getting Started
 ===============
